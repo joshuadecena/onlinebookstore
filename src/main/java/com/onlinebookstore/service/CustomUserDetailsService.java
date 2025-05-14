@@ -2,6 +2,8 @@ package com.onlinebookstore.service;
 
 import com.onlinebookstore.model.User;
 import com.onlinebookstore.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,6 +18,8 @@ import java.util.stream.Collectors;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
+    private static final Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);
+
     private final UserRepository userRepository;
 
     @Autowired
@@ -25,8 +29,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        logger.info("Loading user by username: {}", username);
         User user = userRepository.findByUsername(username)
             .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+
+        logger.info("User found: {}, roles: {}", user.getUsername(), user.getRoles());
 
         Set<GrantedAuthority> authorities = user.getRoles().stream()
             .map(SimpleGrantedAuthority::new)

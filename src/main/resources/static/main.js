@@ -282,6 +282,46 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Function to fetch and render order history
+    function fetchOrderHistory() {
+        fetch('/api/orders/history')
+            .then(res => res.json())
+            .then(data => {
+                renderOrderHistory(data);
+            });
+    }
+
+    // Function to render order history
+    function renderOrderHistory(orders) {
+        orderHistory.innerHTML = '';
+        if (orders.length === 0) {
+            orderHistory.textContent = 'No order history found.';
+            return;
+        }
+        orders.forEach(order => {
+            const div = document.createElement('div');
+            div.className = 'orderItem';
+            let itemsHtml = '';
+            order.orderItems.forEach(item => {
+                itemsHtml += `<p>${item.book.title} - Quantity: ${item.quantity}</p>`;
+            });
+            div.innerHTML = `
+                <h3>Order #${order.id} - ${new Date(order.orderDate).toLocaleString()}</h3>
+                ${itemsHtml}
+            `;
+            orderHistory.appendChild(div);
+        });
+    }
+
+    // Add event listener for order history navigation
+    const orderHistoryBtn = document.createElement('button');
+    orderHistoryBtn.textContent = 'Order History';
+    orderHistoryBtn.addEventListener('click', () => {
+        fetchOrderHistory();
+        showOrderHistory();
+    });
+    document.querySelector('nav').appendChild(orderHistoryBtn);
+
     // Initialize
     showLogin();
 });

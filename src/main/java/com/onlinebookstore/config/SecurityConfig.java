@@ -35,11 +35,11 @@ public class SecurityConfig {
         http
             .csrf().disable()
             .authorizeHttpRequests()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
             .and()
-            .httpBasic()
-            .and()
-            .formLogin().disable();
+            .httpBasic().disable()
+            .formLogin().disable()
+            .logout().disable();
         return http.build();
     }
 
