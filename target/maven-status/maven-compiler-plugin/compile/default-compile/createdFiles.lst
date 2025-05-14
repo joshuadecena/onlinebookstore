@@ -1,12 +1,13 @@
 com\onlinebookstore\model\Book.class
-main\java\com\onlinebookstore\config\DataInitializer.class
 com\onlinebookstore\controller\OrderController.class
 com\onlinebookstore\repository\UserRepository.class
 com\onlinebookstore\repository\BookRepository.class
 com\onlinebookstore\service\UserService.class
 com\onlinebookstore\OnlineBookstoreApplication.class
+com\onlinebookstore\config\DataInitializer.class
 com\onlinebookstore\repository\OrderRepository.class
 com\onlinebookstore\service\BookService.class
+com\onlinebookstore\service\CustomUserDetailsService.class
 com\onlinebookstore\service\OrderService.class
 com\onlinebookstore\controller\BookController.class
 com\onlinebookstore\controller\UserController.class
